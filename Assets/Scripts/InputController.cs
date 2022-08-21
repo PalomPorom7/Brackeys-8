@@ -8,5 +8,12 @@ public class InputController : MonoBehaviour
 
     public Player current;
 
-    
+    private void Update()
+    {
+        if(Input.GetButtonDown("Jump"))
+        {
+            p1.ChangeState();
+            p2.ChangeState();
+        }
+    }
 }

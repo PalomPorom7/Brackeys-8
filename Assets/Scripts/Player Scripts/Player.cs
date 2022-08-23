@@ -32,6 +32,12 @@ public class Player : MonoBehaviour
     public void SetActive(bool active)
     {
         switchController.ToggleIndicator(active);
+
+        if(active)
+            return;
+
+        Move(Vector2.zero);
+        JumpReleased();
     }
     public void Move(Vector2 direction)
     {

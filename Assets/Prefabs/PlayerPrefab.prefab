@@ -201,7 +201,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 6051824800698975121}
-  movementSpeed: 100
+  movementForce: 500
+  maxVelocity: 5
 --- !u!114 &2594308805194528786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,9 +217,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 6051824800698975121}
   startJump: 0
-  startJumpForce: 50
+  startJumpForce: 100
   holdJumpForce: 50
-  maxholdDuration: 0.25
+  maxholdDuration: 0.2
 --- !u!114 &7106993643777738008
 MonoBehaviour:
   m_ObjectHideFlags: 0

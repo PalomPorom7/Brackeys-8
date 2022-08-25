@@ -14,7 +14,8 @@ public class StateController : MonoBehaviour
                             body,
                             eyes,
                             mouth;
-    public BoxCollider2D    bodyCollider;
+    public BoxCollider2D    bodyCollider,
+                            groundColider;
     public PlayerState      state;
     public float            changeStateSpeed;
     public EasingType       changeStateAnimation;
@@ -30,7 +31,10 @@ public class StateController : MonoBehaviour
                     endColliderOffset,
                     startFacePosition,
                     currentFacePosition,
-                    endFacePosition;
+                    endFacePosition,
+                    startGroundColliderSize,
+                    endGroundColliderSize,
+                    currentGroundColliderSize;
     private float   changeStateTime,
                     easedTime;
 
@@ -41,6 +45,7 @@ public class StateController : MonoBehaviour
         currentSize                 = body.size;
         currentColliderOffset       = bodyCollider.offset;
         currentFacePosition         = eyes.transform.localPosition;
+        currentGroundColliderSize   = groundColider.size;
     }
     public bool ChangeState()
     {
@@ -54,6 +59,7 @@ public class StateController : MonoBehaviour
         startSize               = currentSize;
         startColliderOffset     = currentColliderOffset;
         startFacePosition       = currentFacePosition;
+        startGroundColliderSize = currentGroundColliderSize;
 
         if(state == PlayerState.horizontal)
         {
@@ -62,6 +68,8 @@ public class StateController : MonoBehaviour
             endSize                 = size.verticalBodySize;
             endColliderOffset       = size.verticalColliderOffset;
             endFacePosition         = size.verticalFacePosition;
+            endGroundColliderSize   = size.verticalGroundColliderSize;
+            
         }
         else if(state == PlayerState.vertical)
         {
@@ -70,9 +78,18 @@ public class StateController : MonoBehaviour
             endSize                 = size.horizontalBodySize;
             endColliderOffset       = size.horizontalColliderOffset;
             endFacePosition         = size.horizontalFacePosition;
+            endGroundColliderSize   = size.horizontalGroundColliderSize;
         }
+        ChangeLayer(state == PlayerState.horizontal ? 6 : 7);
         StartCoroutine("AnimateStateChange");
         return true;
+    }
+
+    private void ChangeLayer(int layer)
+    {
+        gameObject.layer = layer;
+        bodyCollider.gameObject.layer = layer;
+        groundColider.gameObject.layer = layer;
     }
     private IEnumerator AnimateStateChange()
     {
@@ -87,6 +104,7 @@ public class StateController : MonoBehaviour
             currentSize                 = Vector2.LerpUnclamped(startSize, endSize, easedTime);
             currentColliderOffset       = Vector2.LerpUnclamped(startColliderOffset, endColliderOffset, easedTime);
             currentFacePosition         = Vector2.LerpUnclamped(startFacePosition, endFacePosition, easedTime);
+            currentGroundColliderSize   = Vector2.LerpUnclamped(startGroundColliderSize, endGroundColliderSize, easedTime);
 
             indicator.transform.localPosition   = currentIndicatorPosition;
             body.size                           = currentSize;
@@ -94,6 +112,7 @@ public class StateController : MonoBehaviour
             bodyCollider.offset                 = currentColliderOffset;
             eyes.transform.localPosition        = currentFacePosition;
             mouth.transform.localPosition       = currentFacePosition;
+            groundColider.size                  = currentGroundColliderSize;
 
             yield return null;
         }

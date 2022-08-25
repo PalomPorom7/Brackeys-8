@@ -8,8 +8,7 @@ public class Player : MonoBehaviour
     public JumpController               jumpController;
     public SwitchController             switchController;
     public StateController              stateController;
-
-    public bool isGrounded;
+    public GroundedCollider             groundCollision;
 
     private void Start()
     {
@@ -24,11 +23,21 @@ public class Player : MonoBehaviour
 
         if(stateController == null)
             stateController = GetComponent<StateController>();
+        
+        groundCollision.OnJumpEvent.AddListener(() => {
+            // slight animmation here
+        });
+
+        groundCollision.OnLandEvent.AddListener(() => {
+            jumpController.canJump = true;
+            // Also maybe add some dust particles and animation
+        });
     }
     public void ChangeState()
     {
         stateController.ChangeState();
     }
+
     public void SetActive(bool active)
     {
         switchController.ToggleIndicator(active);
@@ -37,21 +46,25 @@ public class Player : MonoBehaviour
             return;
 
         Move(Vector2.zero);
-        JumpReleased();
+        jumpController.StopJumpBySwap();
     }
+
     public void Move(Vector2 direction)
     {
         horizontalMovementController.Move(direction);
     }
+
     public void JumpPressed()
     {
-//        if(isGrounded)
+        if(groundCollision.isGrounded)
             jumpController.StartJump();
     }
+
     public void JumpHeld(float holdDuration)
     {
         jumpController.HoldJump(holdDuration);
     }
+
     public void JumpReleased()
     {
         jumpController.StopJump();

@@ -14,6 +14,7 @@ public class InputController : MonoBehaviour
     private void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
+
         if(horizontalInput != 0)
         {
             currentPlayer.Move(new Vector2(horizontalInput, 0));

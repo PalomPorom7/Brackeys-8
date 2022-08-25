@@ -6,7 +6,8 @@ public class JumpController : MonoBehaviour
 {
     public Rigidbody2D body;
 
-    public bool     startJump;
+    public bool     startJump,
+                    canJump = true;
     public float    startJumpForce,
                     holdJumpForce,
                     maxholdDuration;
@@ -18,16 +19,24 @@ public class JumpController : MonoBehaviour
         if(body == null)
             body = GetComponent<Rigidbody2D>();
     }
+
     public void StartJump()
     {
+        if (!canJump) return;
         startJump = true;
         jumpHoldDuration = 0;
     }
+
     public void HoldJump(float jumpHoldDuration)
     {
         this.jumpHoldDuration = jumpHoldDuration;
     }
     public void StopJump()
+    {
+        canJump = false;
+        jumpHoldDuration = 0;
+    }
+    public void StopJumpBySwap()
     {
         jumpHoldDuration = 0;
     }
@@ -38,7 +47,7 @@ public class JumpController : MonoBehaviour
             body.AddForce(Vector2.up * startJumpForce);
             startJump = false;
         }
-        if(jumpHoldDuration != 0)
+        if(jumpHoldDuration != 0 && canJump)
         {
             if(jumpHoldDuration > maxholdDuration)
                 return;

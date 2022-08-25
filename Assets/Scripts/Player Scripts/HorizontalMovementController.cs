@@ -15,6 +15,7 @@ public class HorizontalMovementController : MonoBehaviour
     {
         xInput = direction.x;
     }
+
     private void FixedUpdate()
     {
         body.AddForce(new Vector2(xInput * movementForce * Time.fixedDeltaTime, body.velocity.y));

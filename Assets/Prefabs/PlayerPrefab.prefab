@@ -170,7 +170,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &600699445870115719
 MonoBehaviour:
@@ -277,8 +277,8 @@ MonoBehaviour:
   verticalFacePosition: {x: 0, y: 1.5}
   horizontalColliderOffset: {x: 0, y: 0.5}
   verticalColliderOffset: {x: 0, y: 1}
-  shortGroundColliderSize: {x: 1.8, y: 0.1}
-  tallGroundColliderSize: {x: 0.9, y: 0.1}
+  horizontalGroundColliderSize: {x: 1.8, y: 0.1}
+  verticalGroundColliderSize: {x: 0.9, y: 0.1}
 --- !u!1 &600699445920196732
 GameObject:
   m_ObjectHideFlags: 0

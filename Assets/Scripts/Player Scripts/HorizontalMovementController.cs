@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class HorizontalMovementController : MonoBehaviour
 {
-    public Rigidbody2D body;
+    public Rigidbody2D  body,
+                        currentPlatform;
+
     public float    movementForce,
                     maxVelocity;
 
     private float   currentVelocity,
                     xInput;
+    
+    public bool     isStandingOnPlatform;
 
     public void Move(Vector2 direction)
     {
@@ -28,5 +32,24 @@ public class HorizontalMovementController : MonoBehaviour
             currentVelocity = maxVelocity;
 
         body.velocity = new Vector2(currentVelocity, body.velocity.y);
+        if (isStandingOnPlatform) body.velocity += currentPlatform.velocity;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.tag == "Platform")
+        {
+            isStandingOnPlatform = true;
+            currentPlatform = collision.rigidbody;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.transform.tag == "Platform")
+        {
+            isStandingOnPlatform = false;
+            currentPlatform = null;
+        }
     }
 }

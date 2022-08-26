@@ -4,30 +4,32 @@ using UnityEngine;
 
 public class ButtonObject : MonoBehaviour
 {
-    public iControlledObject controlledObject;
-    public Sprite defaultSprite;
-    public Sprite pressedSprite;
-    public Color defaultColour = Color.white;
-    public Color pressedColour = Color.white;
+    public GameObject       controlledObject;
+    public Sprite           defaultSprite;
+    public Sprite           pressedSprite;
+    public Color            defaultColour = Color.white,
+                            pressedColour = Color.white;
 
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer      spriteRenderer;
+    private iControlledObject   controller;
 
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        controller = controlledObject.GetComponent<iControlledObject>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        controlledObject.Activate();
         spriteRenderer.sprite = pressedSprite;
         spriteRenderer.color = pressedColour;
+        controller.Activate();
     }
     
     private void OnTriggerExit2D(Collider2D collision)
     {
-        controlledObject.Deactivate();
         spriteRenderer.sprite = defaultSprite;
         spriteRenderer.color = defaultColour;
+        controller.Deactivate();
     }
 }

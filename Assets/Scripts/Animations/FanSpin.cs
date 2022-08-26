@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FanSpin : MonoBehaviour
+public class FanSpin : MonoBehaviour, iControlledObject
 {
     public Transform spriteTransform;
     public ParticleSystem windParticles;
@@ -49,5 +49,15 @@ public class FanSpin : MonoBehaviour
         rotation.z += currentSpeed;
         if (rotation.z >= 360f) rotation.z -= 360f;
         spriteTransform.localEulerAngles = rotation;
+    }
+    
+    public void Activate()
+    {
+        isSpinning = true;
+    }
+
+    public void Deactivate()
+    {
+        isSpinning = false;
     }
 }

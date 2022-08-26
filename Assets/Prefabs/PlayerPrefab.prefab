@@ -202,8 +202,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 6051824800698975121}
+  currentPlatform: {fileID: 0}
   movementForce: 500
   maxVelocity: 5
+  isStandingOnPlatform: 0
 --- !u!114 &2594308805194528786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,7 +540,7 @@ GameObject:
   - component: {fileID: 4726732972813483781}
   m_Layer: 0
   m_Name: GroundCollider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

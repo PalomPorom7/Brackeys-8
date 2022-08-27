@@ -2643,6 +2643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef6690f8e64cbaf4d963f5f6116f3cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gm: {fileID: 0}
   player1: {fileID: 716053088}
   player2: {fileID: 927473916}
   currentPlayer: {fileID: 716053088}
@@ -7846,7 +7847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1214156999739469697, guid: bc648b4d0ea58b9459dbc9353d78d842, type: 3}
       propertyPath: NextLevel
-      value: SampleScene
+      value: Level 1
       objectReference: {fileID: 0}
     - target: {fileID: 1214156999739469702, guid: bc648b4d0ea58b9459dbc9353d78d842, type: 3}
       propertyPath: m_RootOrder

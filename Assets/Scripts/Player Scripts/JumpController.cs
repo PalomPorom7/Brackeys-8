@@ -10,9 +10,11 @@ public class JumpController : MonoBehaviour
                     canJump = true;
     public float    startJumpForce,
                     holdJumpForce,
-                    maxholdDuration;
+                    maxholdDuration,
+                    maxVelocity;
 
-    private float   jumpHoldDuration;
+    private float   jumpHoldDuration,
+                    currentVelocity;
 
     private void Start()
     {
@@ -54,5 +56,13 @@ public class JumpController : MonoBehaviour
 
             body.AddForce(Vector2.up * holdJumpForce);
         }
+        currentVelocity = body.velocity.y;
+        
+        if(currentVelocity < -maxVelocity)
+            currentVelocity = -maxVelocity;
+        else if(currentVelocity > maxVelocity)
+            currentVelocity = maxVelocity;
+
+        body.velocity = new Vector2(body.velocity.x, currentVelocity);
     }
 }

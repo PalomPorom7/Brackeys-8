@@ -224,6 +224,7 @@ MonoBehaviour:
   startJumpForce: 100
   holdJumpForce: 50
   maxholdDuration: 0.2
+  maxVelocity: 5
 --- !u!114 &7106993643777738008
 MonoBehaviour:
   m_ObjectHideFlags: 0

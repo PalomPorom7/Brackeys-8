@@ -80,7 +80,6 @@ public class StateController : MonoBehaviour
             endFacePosition         = size.horizontalFacePosition;
             endGroundColliderSize   = size.horizontalGroundColliderSize;
         }
-        ChangeLayer(state == PlayerState.horizontal ? 6 : 7);
         StartCoroutine("AnimateStateChange");
         return true;
     }
@@ -116,6 +115,7 @@ public class StateController : MonoBehaviour
 
             yield return null;
         }
+        ChangeLayer(state == PlayerState.horizontal ? 6 : 7);
         isChangingState = false;
     }
 }

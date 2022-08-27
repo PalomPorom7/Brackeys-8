@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private Scene current;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        current = SceneManager.GetActiveScene();
+    }
+    public void Reset()
+    {
+        SceneManager.LoadScene(current.name);
     }
 }

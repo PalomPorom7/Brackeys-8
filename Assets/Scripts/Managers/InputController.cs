@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
+    public GameManager gm;
     public Player player1, player2;
 
     public Player currentPlayer;
@@ -11,6 +12,11 @@ public class InputController : MonoBehaviour
     public float    horizontalInput,
                     jumpHoldDuration;
 
+    private void Start()
+    {
+        if(gm == null)
+            gm = FindObjectOfType<GameManager>();
+    }
     private void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
@@ -51,6 +57,10 @@ public class InputController : MonoBehaviour
         {
             player1.ChangeState();
             player2.ChangeState();
+        }
+        if(Input.GetButtonDown("Reset"))
+        {
+            gm.Reset();
         }
     }
 }

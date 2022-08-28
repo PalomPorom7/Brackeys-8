@@ -58,6 +58,14 @@ public class InputController : MonoBehaviour
             player1.ChangeState();
             player2.ChangeState();
         }
+        if(horizontalInput == 0 && jumpHoldDuration == 0)
+        {
+            currentPlayer.Happy(false);
+        }
+        else
+        {
+            currentPlayer.Happy(true);
+        }
         if(Input.GetButtonDown("Reset"))
         {
             gm.Reset();

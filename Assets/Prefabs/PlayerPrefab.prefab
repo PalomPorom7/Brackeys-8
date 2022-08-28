@@ -255,11 +255,19 @@ MonoBehaviour:
   body: {fileID: 600699445554867091}
   eyes: {fileID: 600699446249168889}
   mouth: {fileID: 600699445920196730}
+  eyesSprites:
+  - {fileID: 21300000, guid: 3fb491a614260854694cdc7bd25b822b, type: 3}
+  - {fileID: 21300000, guid: bc2ecd6f0b2f29f48b7426cd14d2dba8, type: 3}
+  mouthSprites:
+  - {fileID: 21300000, guid: f85f76e4501bb6f4c8937ee6ebe0496f, type: 3}
+  - {fileID: 21300000, guid: 6ad024b2444e16842b108294b32083bd, type: 3}
+  - {fileID: 21300000, guid: 57fbf46c8f0402a41a4b0b29fd473155, type: 3}
   bodyCollider: {fileID: 4848546792032175306}
   groundColider: {fileID: 7953708266168883401}
   state: 1
   changeStateSpeed: 1
   changeStateAnimation: 27
+  blinkDuration: 0.25
 --- !u!114 &3464854175931219208
 MonoBehaviour:
   m_ObjectHideFlags: 0

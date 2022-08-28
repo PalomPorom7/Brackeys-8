@@ -69,4 +69,8 @@ public class Player : MonoBehaviour
     {
         jumpController.StopJump();
     }
+    public void Happy(bool hasInput)
+    {
+        stateController.Happy(hasInput);
+    }
 }

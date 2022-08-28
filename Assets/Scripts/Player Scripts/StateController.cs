@@ -14,11 +14,17 @@ public class StateController : MonoBehaviour
                             body,
                             eyes,
                             mouth;
+
+    public Sprite[]         eyesSprites,
+                            mouthSprites;
     public BoxCollider2D    bodyCollider,
                             groundColider;
     public PlayerState      state;
     public float            changeStateSpeed;
     public EasingType       changeStateAnimation;
+
+    public float            blinkDuration;
+    private float           blinkDelay;
 
     private Vector2 startIndicatorPosition,
                     currentIndicatorPosition,
@@ -46,6 +52,8 @@ public class StateController : MonoBehaviour
         currentColliderOffset       = bodyCollider.offset;
         currentFacePosition         = eyes.transform.localPosition;
         currentGroundColliderSize   = groundColider.size;
+
+        StartCoroutine("Blink");
     }
     public bool ChangeState()
     {
@@ -90,9 +98,38 @@ public class StateController : MonoBehaviour
         bodyCollider.gameObject.layer = layer;
         groundColider.gameObject.layer = layer;
     }
+    public void Happy(bool hasInput)
+    {
+        if(isChangingState)
+            return;
+        
+        if(hasInput)
+            mouth.sprite = mouthSprites[1];
+        else
+            mouth.sprite = mouthSprites[0];
+    }
+    private IEnumerator Blink()
+    {
+        while(true)
+        {
+            print("blink");
+            eyes.sprite = eyesSprites[1];
+
+            yield return new WaitForSeconds(blinkDuration);
+
+            if(!isChangingState)
+                eyes.sprite = eyesSprites[0];
+            
+            blinkDelay = Random.Range(5, 10);
+            yield return new WaitForSeconds(blinkDelay);
+        }
+    }
     private IEnumerator AnimateStateChange()
     {
         isChangingState = true;
+
+        eyes.sprite = eyesSprites[1];
+        mouth.sprite = mouthSprites[2];
 
         while(changeStateTime < 1)
         {
@@ -116,6 +153,10 @@ public class StateController : MonoBehaviour
             yield return null;
         }
         ChangeLayer(state == PlayerState.horizontal ? 6 : 7);
+
+        eyes.sprite = eyesSprites[0];
+        mouth.sprite = mouthSprites[0];
+
         isChangingState = false;
     }
 }

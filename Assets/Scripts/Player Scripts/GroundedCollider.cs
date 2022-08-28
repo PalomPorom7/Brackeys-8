@@ -9,7 +9,7 @@ public class GroundedCollider : MonoBehaviour
     public UnityEvent OnJumpEvent;
     public UnityEvent OnLandEvent;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         isGrounded = true;
         OnLandEvent.Invoke();

@@ -7,11 +7,14 @@ public class LevelController : MonoBehaviour
 {
     public string NextLevel = "";
     public ExitController[] exits;
-    
+    public CircleMask[] circleMasks;
+
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,8 +30,15 @@ public class LevelController : MonoBehaviour
             Debug.Log("Level Complete");
             if (NextLevel != "")
             {
-                SceneManager.LoadScene(NextLevel);
+                StartCoroutine(GoToNext());
             }
         }
+    }
+
+    IEnumerator GoToNext()
+    {
+        audioSource.PlayOneShot(audioSource.clip);
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(NextLevel);
     }
 }

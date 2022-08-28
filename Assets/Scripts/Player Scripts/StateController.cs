@@ -22,6 +22,7 @@ public class StateController : MonoBehaviour
     public PlayerState      state;
     public float            changeStateSpeed;
     public EasingType       changeStateAnimation;
+    public AudioClip        changeSfx;
 
     public float            blinkDuration;
     private float           blinkDelay;
@@ -45,6 +46,8 @@ public class StateController : MonoBehaviour
                     easedTime;
 
     private bool isChangingState = false;
+    private AudioSource audioSource;
+
     private void Start()
     {
         currentIndicatorPosition    = indicator.transform.localPosition;
@@ -52,6 +55,7 @@ public class StateController : MonoBehaviour
         currentColliderOffset       = bodyCollider.offset;
         currentFacePosition         = eyes.transform.localPosition;
         currentGroundColliderSize   = groundColider.size;
+        audioSource                 = GetComponent<AudioSource>();
 
         StartCoroutine("Blink");
     }
@@ -60,6 +64,7 @@ public class StateController : MonoBehaviour
         if(isChangingState)
             return false;
 
+        audioSource.PlayOneShot(changeSfx);
         //check if there's room first?
 
         changeStateTime         = 0;

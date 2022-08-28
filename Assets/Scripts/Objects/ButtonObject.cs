@@ -23,6 +23,7 @@ public class ButtonObject : MonoBehaviour
     {
         spriteRenderer.sprite = pressedSprite;
         spriteRenderer.color = pressedColour;
+        GetComponent<AudioSource>().Play();
         controller.Activate();
     }
     
@@ -30,6 +31,7 @@ public class ButtonObject : MonoBehaviour
     {
         spriteRenderer.sprite = defaultSprite;
         spriteRenderer.color = defaultColour;
+        GetComponent<AudioSource>().Play();
         controller.Deactivate();
     }
 }

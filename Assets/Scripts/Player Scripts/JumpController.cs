@@ -5,6 +5,7 @@ using UnityEngine;
 public class JumpController : MonoBehaviour
 {
     public Rigidbody2D body;
+    public AudioClip jumpSound;
 
     public bool     startJump,
                     canJump = true;
@@ -15,9 +16,11 @@ public class JumpController : MonoBehaviour
 
     private float   jumpHoldDuration,
                     currentVelocity;
+    private AudioSource audioSource;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         if(body == null)
             body = GetComponent<Rigidbody2D>();
     }
@@ -27,6 +30,7 @@ public class JumpController : MonoBehaviour
         if (!canJump) return;
         startJump = true;
         jumpHoldDuration = 0;
+        audioSource.PlayOneShot(jumpSound);
     }
 
     public void HoldJump(float jumpHoldDuration)

@@ -117,7 +117,6 @@ public class StateController : MonoBehaviour
     {
         while(true)
         {
-            print("blink");
             eyes.sprite = eyesSprites[1];
 
             yield return new WaitForSeconds(blinkDuration);

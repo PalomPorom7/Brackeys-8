@@ -269,6 +269,7 @@ MonoBehaviour:
   state: 1
   changeStateSpeed: 1
   changeStateAnimation: 27
+  changeSfx: {fileID: 8300000, guid: 696d7a0e1bcf8488383a46541d979271, type: 3}
   blinkDuration: 0.25
 --- !u!114 &3464854175931219208
 MonoBehaviour:

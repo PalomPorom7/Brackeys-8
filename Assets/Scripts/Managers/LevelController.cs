@@ -7,14 +7,16 @@ public class LevelController : MonoBehaviour
 {
     public string NextLevel = "";
     public ExitController[] exits;
-    public CircleMask[] circleMasks;
+    private CircleMask[] circleMasks = new CircleMask[2];
 
     AudioSource audioSource;
-
+    bool didComplete = false;
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        circleMasks[0] = GameObject.Find("Orange").transform.Find("Eyes").transform.GetChild(0).GetComponent<CircleMask>();
+        circleMasks[1] = GameObject.Find("Blue").transform.Find("Eyes").transform.GetChild(0).GetComponent<CircleMask>();
     }
 
     // Update is called once per frame
@@ -27,6 +29,8 @@ public class LevelController : MonoBehaviour
     {
         if (exits[0].CheckComplete() && exits[1].CheckComplete())
         {
+            if (didComplete) return;
+            didComplete = true;
             Debug.Log("Level Complete");
             if (NextLevel != "")
             {
@@ -38,6 +42,8 @@ public class LevelController : MonoBehaviour
     IEnumerator GoToNext()
     {
         audioSource.PlayOneShot(audioSource.clip);
+        circleMasks[0].Hide();
+        circleMasks[1].Hide();
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene(NextLevel);
     }

@@ -19,6 +19,7 @@ public class InputController : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKey(KeyCode.Escape)) Application.Quit();
         horizontalInput = Input.GetAxis("Horizontal");
 
         if(horizontalInput != 0)

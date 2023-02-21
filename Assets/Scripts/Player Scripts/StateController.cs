@@ -17,8 +17,8 @@ public class StateController : MonoBehaviour
 
     public Sprite[]         eyesSprites,
                             mouthSprites;
-    public BoxCollider2D    bodyCollider,
-                            groundColider;
+    public BoxCollider2D    bodyCollider;
+    public GameObject       feet;
     public PlayerState      state;
     public float            changeStateSpeed;
     public EasingType       changeStateAnimation;
@@ -54,7 +54,6 @@ public class StateController : MonoBehaviour
         currentSize                 = body.size;
         currentColliderOffset       = bodyCollider.offset;
         currentFacePosition         = eyes.transform.localPosition;
-        currentGroundColliderSize   = groundColider.size;
         audioSource                 = GetComponent<AudioSource>();
 
         StartCoroutine("Blink");
@@ -100,8 +99,8 @@ public class StateController : MonoBehaviour
     private void ChangeLayer(int layer)
     {
         gameObject.layer = layer;
+        feet.layer = layer;
         bodyCollider.gameObject.layer = layer;
-        groundColider.gameObject.layer = layer;
     }
     public void Happy(bool hasInput)
     {
@@ -152,7 +151,6 @@ public class StateController : MonoBehaviour
             bodyCollider.offset                 = currentColliderOffset;
             eyes.transform.localPosition        = currentFacePosition;
             mouth.transform.localPosition       = currentFacePosition;
-            groundColider.size                  = currentGroundColliderSize;
 
             yield return null;
         }

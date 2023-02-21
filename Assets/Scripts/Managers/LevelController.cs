@@ -1,53 +1,63 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(AudioSource))]
 public class LevelController : MonoBehaviour
 {
-    public string NextLevel = "";
-    public ExitController[] exits;
+    private Scene current;
+
+    [SerializeField]
+    private string nextLevel = "";
+
+    [SerializeField]
+    private ExitController[] exits;
+
+    [SerializeField]
     private CircleMask[] circleMasks = new CircleMask[2];
+
+    [SerializeField]
     private FadeInUIText text;
 
-    AudioSource audioSource;
-    bool didComplete = false;
-    // Start is called before the first frame update
-    void Start()
+    private AudioSource audioSource;
+    private bool didComplete = false;
+
+    private void Awake()
     {
+        current = SceneManager.GetActiveScene();
         audioSource = GetComponent<AudioSource>();
-        circleMasks[0] = GameObject.Find("Orange").transform.Find("Eyes").transform.GetChild(0).GetComponent<CircleMask>();
-        circleMasks[1] = GameObject.Find("Blue").transform.Find("Eyes").transform.GetChild(0).GetComponent<CircleMask>();
-        if (GameObject.Find("Text") != null) text = GameObject.Find("Text").GetComponent<FadeInUIText>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Reset()
     {
-        
+        SceneManager.LoadScene(current.name);
     }
 
     public void CheckExits()
     {
         if (exits[0].CheckComplete() && exits[1].CheckComplete())
         {
-            if (didComplete) return;
+            if (didComplete)
+                return;
+
             didComplete = true;
-            Debug.Log("Level Complete");
-            if (NextLevel != "")
-            {
+
+            if (nextLevel != "")
                 StartCoroutine(GoToNext());
-            }
         }
     }
 
-    IEnumerator GoToNext()
+    private IEnumerator GoToNext()
     {
-        if (text != null) text.Hide();
+        if (text != null)
+            text.Hide();
+
         audioSource.PlayOneShot(audioSource.clip);
         circleMasks[0].Hide();
         circleMasks[1].Hide();
+
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(NextLevel);
+
+        SceneManager.LoadScene(nextLevel);
     }
 }

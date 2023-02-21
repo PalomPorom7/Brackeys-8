@@ -1,31 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Accepts all input from the player and directs it to the necessary game components
+ */
 public class InputController : MonoBehaviour
 {
-    public GameManager gm;
-    public Player player1, player2;
+    [SerializeField]
+    private LevelController level;
 
-    public Player currentPlayer;
+    [SerializeField]
+    private Player player1, player2;
 
-    public float    horizontalInput,
-                    jumpHoldDuration;
+    private Player currentPlayer;
+    private float horizontalInput;
 
     private void Start()
     {
-        if(gm == null)
-            gm = FindObjectOfType<GameManager>();
+        if(level == null)
+            level = FindObjectOfType<LevelController>();
+
+        currentPlayer = player1;
     }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Escape)) Application.Quit();
+        if (Input.GetKey(KeyCode.Escape))
+            Application.Quit();
+
+        if (Input.GetButtonDown("Reset"))
+            level.Reset();
+
         horizontalInput = Input.GetAxis("Horizontal");
 
-        if(horizontalInput != 0)
-        {
-            currentPlayer.Move(new Vector2(horizontalInput, 0));
-        }
         if(Input.GetButtonDown("Switch"))
         {
             if(currentPlayer == player1)
@@ -34,7 +39,7 @@ public class InputController : MonoBehaviour
                 currentPlayer = player2;
                 player2.SetActive(true);
             }
-            else if(currentPlayer = player2)
+            else if(currentPlayer == player2)
             {
                 player2.SetActive(false);
                 currentPlayer = player1;
@@ -42,34 +47,24 @@ public class InputController : MonoBehaviour
             }
         }
         if(Input.GetButtonDown("Jump"))
-        {
-            jumpHoldDuration = 0;
-            currentPlayer.JumpPressed();
-        }
-        if(Input.GetButton("Jump"))
-        {
-            currentPlayer.JumpHeld(jumpHoldDuration += Time.deltaTime);
-        }
+            currentPlayer.StartJump();
+
         if(Input.GetButtonUp("Jump"))
-        {
-            currentPlayer.JumpReleased();
-        }
+            currentPlayer.StopJump();
+
         if(Input.GetButtonDown("ChangeState"))
         {
             player1.ChangeState();
             player2.ChangeState();
         }
-        if(horizontalInput == 0 && jumpHoldDuration == 0)
-        {
+        if(horizontalInput == 0)
             currentPlayer.Happy(false);
-        }
         else
-        {
             currentPlayer.Happy(true);
-        }
-        if(Input.GetButtonDown("Reset"))
-        {
-            gm.Reset();
-        }
+        
+    }
+    private void FixedUpdate()
+    {
+        currentPlayer.Move(horizontalInput);
     }
 }

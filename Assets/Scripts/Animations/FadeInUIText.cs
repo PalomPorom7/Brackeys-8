@@ -10,32 +10,40 @@ public class FadeInUIText : MonoBehaviour
     float currentTime = 0;
     Text text;
     bool isHiding = false;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
         text = GetComponent<Text>();
         start.a = 0;
         text.color = start;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!isHiding)
         {
-            if (currentTime >= 4) return;
+            if (currentTime >= 4)
+                return;
+
             currentTime += Time.deltaTime;
+
             if (currentTime >= 2)
             {
-                if (currentTime > 4) currentTime = 4;
+                if (currentTime > 4)
+                    currentTime = 4;
+
                 text.color = Color.Lerp(start, end, (currentTime - 2)/2);
             }
         }
         else
         {
-            if (currentTime >= 0.5f) return;
+            if (currentTime >= 0.5f)
+                return;
+
             currentTime += Time.deltaTime;
-            if (currentTime > 0.5f) currentTime = 0.5f;
+
+            if (currentTime > 0.5f)
+                currentTime = 0.5f;
+
             text.color = Color.Lerp(end, start, currentTime/0.5f);
         }
     }

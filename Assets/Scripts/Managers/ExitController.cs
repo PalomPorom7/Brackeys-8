@@ -4,52 +4,32 @@ using UnityEngine;
 
 public class ExitController : MonoBehaviour
 {
-    public PlayerState targetState;
-    public LevelController levelController;
+    [SerializeField]
+    private PlayerState targetState;
 
-    int stateID;
-    bool didComplete = false;
-    GameObject player;
-    
+    [SerializeField]
+    private LevelController levelController;
 
-    void Start()
-    {
-        stateID = targetState == PlayerState.horizontal ? 6 : 7;
-    }
+    [SerializeField]
+    public Player player;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (player != null)
-        {
-            didComplete = player.layer == stateID;
-        }
-        else
-        {
-            didComplete = false;
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            player = collision.gameObject;
-            didComplete = player.layer == stateID;
+            player = collision.GetComponentInParent<Player>();
             levelController.CheckExits();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && player == collision.gameObject)
-        {
+        if (collision.tag == "Player" && player == collision.gameObject.GetComponentInParent<Player>())
             player = null;
-        }
     }
 
     public bool CheckComplete()
     {
-        return didComplete;
+        return player != null && player.State == targetState;
     }
 }
